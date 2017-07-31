@@ -3,7 +3,6 @@ package com.liliumproject.android.wantedlytask
 import android.text.TextUtils
 import android.support.v4.widget.SearchViewCompat.setQueryHint
 import android.support.v4.widget.SearchViewCompat.setSubmitButtonEnabled
-import android.widget.ArrayAdapter
 import android.os.Bundle
 import android.app.Activity
 
@@ -11,11 +10,9 @@ import android.app.Activity
 
 import android.support.v4.widget.SearchViewCompat.setQueryHint
 import android.support.v4.widget.SearchViewCompat.setSubmitButtonEnabled
-import android.widget.SearchView
-import android.widget.ListView
 import android.support.v7.widget.SearchView.OnQueryTextListener
 import android.util.Log
-import android.widget.Adapter
+import android.widget.*
 import com.liliumproject.android.wantedlytask.R
 
  class MainActivity : Activity(), SearchView.OnQueryTextListener {
@@ -27,6 +24,8 @@ import com.liliumproject.android.wantedlytask.R
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        val btn = findViewById(R.id.b) as Button
+        btn.setOnClickListener { object: ApiProceeding(){}.execute("tetris") }
         val search = findViewById(R.id.search) as SearchView
         val list = findViewById(R.id.re) as ListView
         adapter =ArrayAdapter(this,
