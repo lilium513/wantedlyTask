@@ -14,25 +14,27 @@ import android.support.v7.widget.SearchView.OnQueryTextListener
 import android.util.Log
 import android.widget.*
 import com.liliumproject.android.wantedlytask.R
+import java.util.logging.Logger
 
- class MainActivity : Activity(), SearchView.OnQueryTextListener {
+class MainActivity : Activity(), SearchView.OnQueryTextListener {
      private val list: ListView? = null
-     private val array_adapter_data = arrayOf("Apple", "Bike", "Cupcake", "Donut", "Eclair", "Froyo", "Gingerbread", "Honeycomb")
+     private var array_adapter_data = arrayOf("")
      var adapter:ArrayAdapter<String>? = null
-
+    var temp:String =""
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         val btn = findViewById(R.id.b) as Button
-        btn.setOnClickListener { object: ApiProceeding(){}.execute("tetris") }
+
         val search = findViewById(R.id.search) as SearchView
         val list = findViewById(R.id.re) as ListView
+        val a=ApiProceeding(list,this)
+        array_adapter_data=a.names.toTypedArray()
         adapter =ArrayAdapter(this,
                 android.R.layout.simple_list_item_1, array_adapter_data)
         list!!.setAdapter(adapter)
         list!!.setTextFilterEnabled(true)
-
         // SearchViewの初期表示状態を設定
         search.setIconifiedByDefault(false)
         search.setOnQueryTextListener(this)
@@ -43,6 +45,20 @@ import com.liliumproject.android.wantedlytask.R
 
         // SearchViewに何も入力していない時のテキストを設定
         search.setQueryHint("検索文字を入力して下さい。")
+        btn.setOnClickListener { a.execute("tetris")
+
+            array_adapter_data=a.names.toTypedArray()
+
+            adapter =ArrayAdapter(this,
+                    android.R.layout.simple_list_item_1, array_adapter_data)
+            adapter!!.notifyDataSetChanged()
+            adapter!!.notifyDataSetChanged()
+
+            list!!.setAdapter(adapter)
+            adapter!!.notifyDataSetChanged()
+            Log.e("end","end")
+
+        }
     }
 
      override fun onQueryTextChange(newText: String?): Boolean {
