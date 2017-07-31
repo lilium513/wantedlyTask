@@ -17,10 +17,11 @@ import com.liliumproject.android.wantedlytask.R
 import java.util.logging.Logger
 
 class MainActivity : Activity(), SearchView.OnQueryTextListener {
-     private val list: ListView? = null
      private var array_adapter_data = arrayOf("")
      var adapter:ArrayAdapter<String>? = null
     var temp:String =""
+    var a:ApiProceeding? = null
+    var list:ListView? = null
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -28,9 +29,9 @@ class MainActivity : Activity(), SearchView.OnQueryTextListener {
         val btn = findViewById(R.id.b) as Button
 
         val search = findViewById(R.id.search) as SearchView
-        val list = findViewById(R.id.re) as ListView
-        val a=ApiProceeding(list,this)
-        array_adapter_data=a.names.toTypedArray()
+        list = findViewById(R.id.re) as ListView
+        a=ApiProceeding(list!!,this)
+        array_adapter_data= a!!.names.toTypedArray()
         adapter =ArrayAdapter(this,
                 android.R.layout.simple_list_item_1, array_adapter_data)
         list!!.setAdapter(adapter)
@@ -45,9 +46,9 @@ class MainActivity : Activity(), SearchView.OnQueryTextListener {
 
         // SearchViewに何も入力していない時のテキストを設定
         search.setQueryHint("検索文字を入力して下さい。")
-        btn.setOnClickListener { a.execute("tetris")
+        btn.setOnClickListener { a!!.execute("tetris")
 
-            array_adapter_data=a.names.toTypedArray()
+            array_adapter_data=a!!.names.toTypedArray()
 
             adapter =ArrayAdapter(this,
                     android.R.layout.simple_list_item_1, array_adapter_data)
@@ -63,11 +64,9 @@ class MainActivity : Activity(), SearchView.OnQueryTextListener {
 
      override fun onQueryTextChange(newText: String?): Boolean {
          if (TextUtils.isEmpty(newText)) {
-             list?.clearTextFilter()
-         } else {
-             list?.setFilterText(newText.toString());
-             Log.d("else",newText.toString())
-             adapter?.notifyDataSetChanged()
+         } else if(newText?.length?.rem(2) ==0){
+             a=ApiProceeding(list!!,this)
+             a?.execute(newText)
 
          }
          return true;
