@@ -55,7 +55,6 @@ public open class ApiProceeding(val li:ListView,val co:Context) : AsyncTask<Stri
             name =reps.getJSONObject(0).getString("name")
             for (i in 0 until reps.length()){
                 names.add(reps.getJSONObject(i).getString("name"))
-                Log.e("名前",names.get(i))
 
             }
 
@@ -64,8 +63,7 @@ public open class ApiProceeding(val li:ListView,val co:Context) : AsyncTask<Stri
         } catch(e: JSONException) {
             e.printStackTrace()
         }
-        Log.e("名前",name)
-        return  names.toTypedArray()  // （12）
+        return  names.toTypedArray()
 
 
 

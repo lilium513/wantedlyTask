@@ -26,7 +26,6 @@ class MainActivity : Activity(), SearchView.OnQueryTextListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val btn = findViewById(R.id.b) as Button
 
         val search = findViewById(R.id.search) as SearchView
         list = findViewById(R.id.re) as ListView
@@ -46,27 +45,19 @@ class MainActivity : Activity(), SearchView.OnQueryTextListener {
 
         // SearchViewに何も入力していない時のテキストを設定
         search.setQueryHint("検索文字を入力して下さい。")
-        btn.setOnClickListener { a!!.execute("tetris")
 
-            array_adapter_data=a!!.names.toTypedArray()
-
-            adapter =ArrayAdapter(this,
-                    android.R.layout.simple_list_item_1, array_adapter_data)
-            adapter!!.notifyDataSetChanged()
-            adapter!!.notifyDataSetChanged()
-
-            list!!.setAdapter(adapter)
-            adapter!!.notifyDataSetChanged()
-            Log.e("end","end")
-
-        }
     }
 
      override fun onQueryTextChange(newText: String?): Boolean {
+
          if (TextUtils.isEmpty(newText)) {
-         } else if(newText?.length?.rem(2) ==0){
+         }
+
+         else if(newText?.length!! > 2 ){
+
              a=ApiProceeding(list!!,this)
              a?.execute(newText)
+
 
          }
          return true;
